@@ -9,6 +9,9 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
+    {{-- icons --}}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
@@ -18,7 +21,7 @@
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
@@ -73,8 +76,30 @@
         </nav>
 
         <main class="py-4">
-            @yield('content')
+            @auth()
+                <div class="container">
+                    <div class="row">
+                        <div class="col-2">
+                            @include("layouts.sideBar")
+                        </div>
+                        <div class="col-10">
+                            @yield('content')
+                        </div>
+                    </div>
+                </div>
+            @endauth
+
+            @guest()
+                @yield('content')
+            @endguest
         </main>
     </div>
+    @if (session("status"))
+        <script>
+            window.addEventListener('load', (event) => {
+                showToast("{{ session("status") }}")
+            });
+        </script>
+    @endif
 </body>
 </html>
