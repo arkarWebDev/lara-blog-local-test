@@ -23,10 +23,10 @@
 <p class="text-black-50 text-sm m-0 ">Post Management</p>
 <ul class=" list-unstyled mb-3">
     <li class=" bg-dark p-2 rounded">
-        <a href="#" class=" text-white text-decoration-none"><i class="fa-solid fa-plus me-2"></i>Add Post</a>
+        <a href="{{ route("post.create") }}" class=" text-white text-decoration-none"><i class="fa-solid fa-plus me-2"></i>Add Post</a>
     </li>
     <li class=" bg-dark p-2 rounded mt-2">
-        <a href="#" class=" text-white text-decoration-none"><i class="fa-solid fa-list me-2"></i>Posts List</a>
+        <a href="{{ route("post.index") }}" class=" text-white text-decoration-none"><i class="fa-solid fa-list me-2"></i>Posts List</a>
     </li>
     <hr>
 </ul>
