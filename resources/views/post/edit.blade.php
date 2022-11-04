@@ -5,13 +5,13 @@
   <ol class="breadcrumb">
     <li class="breadcrumb-item"><a href="{{ route("home") }}"><i class="fa-solid fa-house text-dark"></i></a></li>
     <li class="breadcrumb-item active" aria-current="page"><span class="text-dark">Post Management</span></li>
-    <li class="breadcrumb-item active" aria-current="page"><a href="{{ route("post.create") }}" class="text-dark text-decoration-none">Add Post</a></li>
+    <li class="breadcrumb-item active" aria-current="page"><span class="text-dark">Edit Post</span></li>
   </ol>
 </nav>
 <div class="card">
     <div class="card-body">
         <h2 class=" fw-bold">Edit your post.</h2>
-        <p class=" fw-lighter text-black-50">Hello user. <br> 
+        <p class=" fw-lighter text-black-50">Hello <span class="text-dark">{{  \App\Models\User::find($post->user_id)->name }}</span><br> 
         What changes in your mind ?
         </p>
         <form action="{{ route("post.update",$post->id) }}" method="post" enctype="multipart/form-data">

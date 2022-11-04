@@ -58,10 +58,21 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                                    <a class="dropdown-item" href="{{ route("user.show",Auth::user()->id) }}">
+                                      <div class="d-flex align-items-center justify-content-between">
+                                        <i class="fa-solid fa-circle-user fs-4 text-dark ms-2"></i>
+                                        <span class=" text-dark fw-bold">View Profile</span>
+                                      </div>
+                                    </a>
+                                    <hr class="dropdown-divider">
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
+                                        <div class="d-flex align-items-center justify-content-between pe-1">
+                                            <i class="fa-solid fa-right-from-bracket fs-4 text-dark ms-2"></i>
+                                            <span class="text-dark fw-bold">{{ __('Logout') }}</span>
+                                        </div>
                                     </a>
 
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">

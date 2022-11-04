@@ -36,49 +36,76 @@
       <th scope="col">Post Info</th>
       <th scope="col"></th>
       <th scope="col">Create at</th>
-      <th scope="col"></th>
-      <th scope="col"></th>
-      <th scope="col"></th>
+      <th scope="col" class="text-dark">Control</th>
     </tr>
   </thead>
   <tbody>
     @forelse ($posts as $post)
       <tr>
         <th colspan="2">
-          <p class="m-0">{{ $post->title }}</p>
+          <p class="m-0">{{ Str::substr($post->title, 0, 50) }}</p>
           <div class="d-flex align-items-center">
             <span>
               <i class="fa-regular fa-folder"></i>
-              <span class=" text-black-50">{{ \App\Models\Category::find($post->category_id)->title }}</span>
+              <span class=" text-black-50">{{ $post->category->title }}</span>
             </span>
             <i class="fa-solid fa-chevron-right mx-2" style="font-size: 10px"></i>
+            @isUser
             <span>
               <i class="fa-regular fa-user"></i>
-              {{ \App\Models\User::find($post->user_id)->name }}
+              {{ __('You') }}
             </span>
+            @endisUser
+
+            @notUser
+            <span>
+              <i class="fa-regular fa-user"></i>
+              {{ $post->user->name }}
+            </span>
+            @endnotUser
           </div>
         </th>
         <th>
           <p class=" m-0 text-sm text-black-50"><i class="fa-regular fa-calendar me-2"></i>{{ $post->created_at->format("d M o") }}</p>
-          <p class=" m-0 text-sm text-black-50"><i class="fa-regular fa-clock me-2"></i>{{ $post->created_at->format("g:h A") }}</p>
+          <p class=" m-0 text-sm text-black-50"><i class="fa-regular fa-clock me-2"></i>{{ $post->created_at->format("g:i A") }}</p>
         </th>
-        <th class="pt-3"><a href="{{ route("post.edit",$post->id) }}"><i class="fa-regular fa-pen-to-square fs-4 text-dark"></i></a></th>
-        <th class="pt-3">
-          <form action="{{ route("post.destroy",$post->id) }}" method="post">
-            @csrf
-            @method("delete")
-            <button type="submit" style="padding: 0;border: none;background: none">
-              <i class="fa-solid fa-trash-can fs-4 text-danger"></i>
-            </button>
-          </form>
+        <th>
+          <div class="user-ctr">
+            <i class="fa-solid fa-ellipsis text-dark mt-3 fs-5"></i>
+            <ul class="ctr-menu list-unstyled">
+                <li>
+                  <span>
+                    <a href="{{ route("post.edit",$post->id) }}" class="text-decoration-none text-dark">
+                      <i class="fa-regular fa-pen-to-square fs-6 text-dark me-1"></i>Edit
+                    </a>
+                  </span>
+                </li>
+              <li>
+                <span>
+                  <form action="{{ route("post.destroy",$post->id) }}" method="post" class="d-inline-block m-0">
+                    @csrf
+                    @method("delete")
+                    <button type="submit" style="padding: 0;border: none;background: none;">
+                      <i class="fa-solid fa-trash-can fs-6 text-danger" style="margin-right: 1px"></i>
+                       <span class=" fw-semibold">Delete</span>
+                    </button>
+                  </form>
+                </span>
+              </li>
+             
+              <li>
+                <span>
+                  <a href="{{ route("post.show",$post->id) }}" class="text-decoration-none text-dark">
+                    <i class="fa-solid fa-eye fs-6 text-dark me-1"></i>View
+                  </a>
+                </span>
+              </li>
+            </ul>
+          </div>
         </th>
-        <th class=" pt-3">
-          <a href="{{ route("post.show",$post->id) }}">
-            <i class="fa-solid fa-arrow-up-right-from-square fs-4 text-dark"></i>
-          </a>
-        </th>
+        
     @empty
-    <th colspan="6">
+    <th colspan="4">
       <p class="text-center fs-5">There is no post to show .</p>
     </th>
     @endforelse

@@ -7,6 +7,7 @@ use Illuminate\Support\Str;
 use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Gate;
 
 class CategoryController extends Controller
 {
@@ -17,7 +18,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::latest("id")->get();
+        $categories = Category::when(Auth::user()->role == 2,fn ($q) => $q->where("user_id",Auth::id()))
+        ->latest("id")
+        ->get();
         return view("category.index",compact("categories"));
     }
 
@@ -67,6 +70,7 @@ class CategoryController extends Controller
      */
     public function edit(Category $category)
     {
+        Gate::authorize("update",$category);
         return view("category.edit",compact("category"));
     }
 
@@ -79,6 +83,10 @@ class CategoryController extends Controller
      */
     public function update(UpdateCategoryRequest $request, Category $category)
     {
+        if(Gate::denies("update",$category)){
+            abort(403,"you role can't edit category.");
+        }
+
         $category->title = $request->title;
         $category->slug = Str::slug($request->title);
         $category->user_id = Auth::id();
@@ -95,6 +103,10 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        if(Gate::denies("delete",$category)){
+            abort(403,"you role can't edit category.");
+        }
+        
         $categoryName = $category->title;
         $category->delete();
 

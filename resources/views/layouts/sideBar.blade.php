@@ -31,13 +31,15 @@
     <hr>
 </ul>
 
-<p class="text-black-50 text-sm m-0 ">User Management</p>
-<ul class=" list-unstyled mb-3">
-    <li class=" bg-dark p-2 rounded">
-        <a href="#" class=" text-white text-decoration-none"><i class="fa-solid fa-plus me-2"></i>Add User</a>
-    </li>
-    <li class=" bg-dark p-2 rounded mt-2">
-        <a href="#" class=" text-white text-decoration-none"><i class="fa-solid fa-list me-2"></i>Users List</a>
-    </li>
-    <hr>
-</ul>
+@isAdmin
+    <p class="text-black-50 text-sm m-0 ">User Management</p>
+    <ul class=" list-unstyled mb-3">
+        <li class=" bg-dark p-2 rounded">
+            <a href="#" class=" text-white text-decoration-none"><i class="fa-solid fa-user-plus me-2"></i>Add User</a>
+        </li>
+        <li class=" bg-dark p-2 rounded mt-2">
+            <a href="{{ route("user.index") }}" class=" text-white text-decoration-none"><i class="fa-solid fa-users me-2"></i>Users List</a>
+        </li>
+        <hr>
+    </ul>
+@endisAdmin

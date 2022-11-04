@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
+use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
 {
@@ -22,7 +23,7 @@ class PostController extends Controller
             $keyword = request("keyword");
                 $q->Orwhere("title","like","%$keyword%")
                 ->orWhere("description","like","%$keyword%");
-        })
+        })->when(Auth::user()->role == 2,fn ($q) => $q->where("user_id",Auth::user()->id))
         ->latest()->paginate(10)->withQueryString();
         return view("post.index",compact("posts"));
     }
@@ -85,6 +86,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
+        Gate::authorize("update",$post);
+        
         return view("post.edit",compact("post"));
     }
 
@@ -97,6 +100,10 @@ class PostController extends Controller
      */
     public function update(UpdatePostRequest $request, Post $post)
     {
+        if(Gate::denies("update",$post)){
+            return abort("403","You can't update other users posts");
+        }
+        
         $post->title = $request->title;
         $post->slug = Str::slug($request->title);
         $post->description = $request->description;
@@ -123,6 +130,10 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if(Gate::denies("delete",$post)){
+            return abort("403","you can't delete other users posts.");
+        }
+
         if(isset($post->feature_image)){
             Storage::delete("public/". $post->feature_image);
         }

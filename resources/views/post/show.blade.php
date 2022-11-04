@@ -17,24 +17,22 @@
         <p class="w-100 bg-dark text-center text-white fs-5">This post is not included featue image .</p>
       @endif
         <div>
-            <p class="m-0">
-              <i class="fa-regular fa-folder"></i> |
-              <span class="">{{ \App\Models\Category::find($post->category_id)->title }}</span>
-            </p>
-            <div></div>
-            <p class="m-0">
-              <i class="fa-regular fa-user"></i> |
-              <span class="">{{ \App\Models\User::find($post->user_id)->name }}</span>
-            </p>
-            <p class="m-0">
-              <i class="fa-regular fa-calendar"></i> |
+            <span class="m-0 bg-dark badge" style="font-size: 12px">
+              <i class="fa-regular fa-folder"></i>
+              <span class="">{{ $post->category->title }}</span>
+            </span>
+            <span class="m-0 bg-dark badge" style="font-size: 12px">
+              <i class="fa-regular fa-user"></i>
+              <span class="">{{ $post->user->name }}</span>
+            </span>
+            <p class="m-0 bg-dark badge" style="font-size: 12px">
+              <i class="fa-regular fa-calendar"></i>
               <span class="">{{ $post->created_at->format("d M o") }}</span>
-              <div></div>
-              <i class="fa-regular fa-clock"></i> |
-              <span class="">{{ $post->created_at->format("g:h A") }}</span>
             </p>
         </div>
-        <h2 class=" text-center my-3">{{ $post->title }}</h2>
+        <div class="text-center ">
+          <h2 class="my-3 hv-ef">{{ $post->title }}</h2>
+        </div>
         <p class=" text-black-50">{{ $post->description }}</p>
     </div>
 </div>
