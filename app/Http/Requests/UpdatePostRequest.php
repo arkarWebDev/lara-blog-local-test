@@ -28,7 +28,6 @@ class UpdatePostRequest extends FormRequest
             "category" => "required|exists:categories,id",
             "description" => "required|min:20",
             "feature_image" => "nullable|mimes:png,jpg|file|max:512",
-            "subImgs" => "required",
             "subImgs.*" => "mimes:png,jpg|file|max:512"
         ];
     }

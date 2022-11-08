@@ -66,7 +66,7 @@ class PostController extends Controller
         $post->save();
 
         foreach($request->subImgs as $img){
-            $fileName = uniqid() . "_sub_img." . $request->file("feature_image")->extension();
+            $fileName = uniqid() . "_sub_img." . $img->extension();
             $img->storeAs("public",$fileName);
 
             $subImg = new SubImg();
@@ -130,7 +130,20 @@ class PostController extends Controller
         $post->user_id = Auth::id();
         $post->category_id = $request->category;
         $post->update();
-        
+
+        if($request->hasFile("subImgs")){
+            foreach($request->subImgs as $img){
+                $fileName = uniqid() . "_sub_img." . $img->extension();
+                $img->storeAs("public",$fileName);
+
+                $subImg = new SubImg();
+                $subImg->name = $fileName;
+                $subImg->post_id = $post->id;
+
+                $subImg->save();
+            }
+        }
+
         return redirect()->route("post.index")->with("status","Post updated successfully.");
     }
 
@@ -150,6 +163,13 @@ class PostController extends Controller
             Storage::delete("public/". $post->feature_image);
         }
         $post->delete();
+
+        foreach($post->subImgs as $img){
+            Storage::delete("public/" . $img->name);
+
+            $img->delete();
+        }
+
         return redirect()->route("post.index")->with("status","Post deleted successfully.");
     }
 }

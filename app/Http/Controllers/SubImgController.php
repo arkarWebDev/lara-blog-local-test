@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\SubImg;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreSubImgRequest;
 use App\Http\Requests\UpdateSubImgRequest;
 
@@ -15,7 +16,7 @@ class SubImgController extends Controller
      */
     public function index()
     {
-        //
+        // 
     }
 
     /**
@@ -47,7 +48,7 @@ class SubImgController extends Controller
      */
     public function show(SubImg $subImg)
     {
-        //
+        // 
     }
 
     /**
@@ -81,6 +82,9 @@ class SubImgController extends Controller
      */
     public function destroy(SubImg $subImg)
     {
-        //
+        Storage::delete("public/" . $subImg->name);
+        $subImg->delete();
+
+        return redirect()->back();
     }
 }
