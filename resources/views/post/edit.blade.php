@@ -39,6 +39,28 @@
                 @enderror
               </div>
             </div>
+            <label for="subImgs" class="form-label">Sub Images</label>
+            <div class="d-flex">
+            @foreach ($post->subImgs as $img)
+              <div class=" d-flex position-relative">
+                <div class=" position-absolute w-100 h-100 text-center pt-5" style="background: rgba(255, 255, 255, .4)">
+                  <i class="fa-regular fa-circle-xmark fs-2 text-dark"></i>
+                </div>
+                <img src="{{ asset("storage/" . $img->name) }}" style="width: 100px;height: 100px;" class="rounded me-1">
+              </div>
+            @endforeach
+            </div>
+            <input type="file" name="subImgs[]" class=" form-control mt-3 mb-3  
+            @error('subImgs') is-invalid @enderror
+            @error('subImgs.*') is-invalid @enderror" 
+            id="subImgs"
+            multiple>
+            @error("subImgs.*")
+                <p class=" invalid-feedback">{{ $message }}</p>
+            @enderror
+            @error("subImgs")
+                <p class=" invalid-feedback">{{ $message }}</p>
+            @enderror
             <label for="description" class="form-label">Write your post description here.</label>
             <textarea name="description" id="description" rows="10" class=" form-control @error('description') is-invalid @enderror">{{ old("description",$post->description) }}</textarea>
             @error("description")

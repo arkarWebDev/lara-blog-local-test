@@ -34,6 +34,13 @@
           <h2 class="my-3 hv-ef">{{ $post->title }}</h2>
         </div>
         <p class=" text-black-50">{{ $post->description }}</p>
+        <div>
+          <h4>Sub Images</h4>
+          
+          @foreach ($post->subImgs as $img)
+            <img src="{{ asset("storage/" . $img->name) }}" style="width: 200px;height: 200px" class="rounded me-2">
+          @endforeach
+        </div>
     </div>
 </div>
 @endsection

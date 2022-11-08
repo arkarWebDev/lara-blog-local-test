@@ -18,21 +18,9 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        \App\Models\User::factory(20)->create();
-        
-        \App\Models\User::factory()->create([
-            'name' => 'Htoo Arkar Linn',
-            'email' => 'admin@gmail.com',
-            'role' => "0"
-        ]);
-
-        \App\Models\User::factory()->create([
-            'name' => 'Thel Su Yin Nway',
-            'email' => 'editor@gmail.com',
-            'role' => "1"
-        ]);
-
         $this->call([
+            NationSeeder::class,
+            UserSeeder::class,
             CategorySeeder::class,
             PostSeeder::class
         ]);

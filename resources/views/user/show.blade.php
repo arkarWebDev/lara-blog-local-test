@@ -27,10 +27,11 @@
                     <span class="m-0 text-dark fs-6"><i class="fa-solid fa-user-check me-1"></i>Verified User</span>
                 @endif
                 </p>
+                <p class=" fs-6 text-black-50 fw-bold">Country : <span class="text-dark">{{ $user->nation->name }}</span></p>
                 <p class=" fs-6 text-black-50 fw-bold">Account created at : <span class="text-dark">{{ $user->created_at->format("d M o g:i A") }}</span></p>
             </div>
             <div class="col-5 d-flex justify-content-end pe-4">
-                <div style="width: 130px;height: 130px" class="rounded-circle border border-3 border-dark p-2 overflow-hidden mt-2">
+                <div style="width: 130px;height: 130px" class="rounded-circle border border-3 border-dark p-2 overflow-hidden mt-4">
                     <img src="{{ asset("admin.jpg") }}" class="w-100">
                 </div>
             </div>

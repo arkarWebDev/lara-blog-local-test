@@ -42,17 +42,29 @@
                     <p class=" invalid-feedback">{{ $message }}</p>
             @enderror
             <div class="d-flex align-items-center justify-content-between mt-3">
-              <div class="w-50">
+              <div class="w-50 me-2">
                 <label for="feature_image" class="form-label">Feature Image</label>
                 <input type="file" name="feature_image" class=" form-control  @error('feature_image') is-invalid @enderror" id="feature_image">
                 @error("feature_image")
                     <p class=" invalid-feedback">{{ $message }}</p>
                 @enderror
               </div>
-              <div class="w-25">
-                <input type="submit" value="Post" class=" btn btn-dark btn-lg mt-4 w-100">
+              <div class="w-50 ms-2">
+                <label for="subImgs" class="form-label">Sub Images</label>
+                <input type="file" name="subImgs[]" class=" form-control  
+                @error('subImgs') is-invalid @enderror
+                @error('subImgs.*') is-invalid @enderror" 
+                id="subImgs"
+                multiple>
+                @error("subImgs.*")
+                    <p class=" invalid-feedback">{{ $message }}</p>
+                @enderror
+                @error("subImgs")
+                    <p class=" invalid-feedback">{{ $message }}</p>
+                @enderror
               </div>
             </div>
+            <input type="submit" value="Post" class=" btn btn-dark btn-lg w-100 mt-3">
         </form>
     </div>
 </div>

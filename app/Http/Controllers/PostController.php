@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StorePostRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UpdatePostRequest;
+use App\Models\SubImg;
 use Illuminate\Support\Facades\Gate;
 
 class PostController extends Controller
@@ -63,6 +64,17 @@ class PostController extends Controller
         $post->user_id = Auth::id();
         $post->category_id = $request->category;
         $post->save();
+
+        foreach($request->subImgs as $img){
+            $fileName = uniqid() . "_sub_img." . $request->file("feature_image")->extension();
+            $img->storeAs("public",$fileName);
+
+            $subImg = new SubImg();
+            $subImg->name = $fileName;
+            $subImg->post_id = $post->id;
+
+            $subImg->save();
+        }
         
         return redirect()->route("post.index")->with("status","Post uploaded successfully.");
     }
