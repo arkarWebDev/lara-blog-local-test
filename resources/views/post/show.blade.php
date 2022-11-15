@@ -11,11 +11,6 @@
 </nav>
 <div class="card">
     <div class="card-body">
-      @if (isset($post->feature_image))
-        <img src="{{ asset("storage/". $post->feature_image) }}" class="w-100 mb-3">
-      @else
-        <p class="w-100 bg-dark text-center text-white fs-5">This post is not included featue image .</p>
-      @endif
         <div>
             <span class="m-0 bg-dark badge" style="font-size: 12px">
               <i class="fa-regular fa-folder"></i>
@@ -37,9 +32,11 @@
         <div>
           <h4>Sub Images</h4>
           
-          @foreach ($post->subImgs as $img)
+          @forelse ($post->subImgs as $img)
             <img src="{{ asset("storage/" . $img->name) }}" style="width: 200px;height: 200px" class="rounded me-2">
-          @endforeach
+          @empty
+            <p class="m-0">No sub images in this post.</p>
+          @endforelse ()
         </div>
     </div>
 </div>

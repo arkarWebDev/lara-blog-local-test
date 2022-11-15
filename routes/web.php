@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\GuestController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\SubImgController;
 use App\Http\Controllers\UserController;
@@ -18,9 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/',[GuestController::class,'index'])->name('guest.index');
 
 Auth::routes();
 
@@ -30,4 +29,5 @@ Route::middleware("auth")->group(function(){
     Route::resource('/post',PostController::class);
     Route::resource('/user',UserController::class);
     Route::resource('/subImgs',SubImgController::class);
+    Route::get('/allpost',[UserController::class,'showAllPost'])->name('user.allpost');
 });

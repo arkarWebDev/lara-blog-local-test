@@ -47,29 +47,46 @@
         <h3 class=" fw-bold m-0 mt-4">Recent Posts</h3>
         <hr>
         <div class="row">
-            @forelse ($user->posts as $post)
+            @forelse ($user->posts()->limit(8)->get() as $post)
                 <div class="col-4 mb-3">
                     <div class="card">
                         <div class="card-body">
                             <a href="{{ route("post.show",$post->id) }}" class="text-decoration-none">
                                 <h5 class="text-black fw-bold hv-ef">{{ Str::substr($post->title, 0, 30) }}</h5>
                             </a>
-                            @if ($post->feature_image != null)
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <div class="rounded overflow-hidden" style="width: 60px;height: 60px">
-                                        <img src="{{ asset("storage/" . $post->feature_image) }}" class="w-100">
-                                    </div>
-                                    <span class=" text-black-50 ms-2 mb-2 border-start border-2 border-dark ps-2">{{ Str::substr($post->description, 0, 60) }}</span>
-                                </div>
-                            @else
-                                <p class=" text-black-50">{{ Str::substr($post->description, 0, 60) }}</p>
-                            @endif
+                            <p class=" text-black-50">{{ Str::substr($post->description, 0, 60) }}</p>
                         </div>
                     </div>
                 </div>
             @empty
                 <p class="m-0">No post added currently.</p>
             @endforelse
+            <div class="col-4 mb-3">
+                <div class="card">
+                    <div class="card-body text-center">
+                        <a href="{{ route("user.allpost") }}" class=" text-decoration-none text-dark">
+                            <i class="fa-solid fa-arrow-right fs-1 mt-2"></i>
+                            <div></div>
+                            <h5 class="text-black fw-bold hv-ef mt-3">See all posts</h5>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            </div>
+            <h3 class=" fw-bold m-0 mt-4">Photos From Posts</h3>
+            <hr>
+            <div class="grid-ctr">
+            @forelse ($user->subImgs as $img)
+                <img src="{{ asset("storage/" . $img->name) }}"  class="w-100 me-3 mb-3 rounded">
+            @empty
+                <p class="m-0">No photo added yet.</p>
+            @endforelse
+            @foreach ($user->posts as $img)
+                @if ($img->feature_image != NULL)
+                    <img src="{{ asset("storage/" . $img->feature_image) }}"  class=" w-100 me-3 mb-3 rounded">
+                @endif
+            @endforeach
+            </div>
         </div>
     </div>
     

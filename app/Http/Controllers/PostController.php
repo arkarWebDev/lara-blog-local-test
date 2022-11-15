@@ -22,10 +22,14 @@ class PostController extends Controller
     {
         $posts = Post::when(request("keyword"),function($q){
             $keyword = request("keyword");
-                $q->Orwhere("title","like","%$keyword%")
-                ->orWhere("description","like","%$keyword%");
-        })->when(Auth::user()->role == 2,fn ($q) => $q->where("user_id",Auth::user()->id))
-        ->latest()->paginate(10)->withQueryString();
+            $q->Orwhere("title","like","%$keyword%")
+            ->orWhere("description","like","%$keyword%");
+        })
+        ->when(Auth::user()->role == 2,fn ($q) => $q->where("user_id",Auth::user()->id))
+        ->latest('id')
+        ->with(["category","user"])
+        ->paginate(10)
+        ->withQueryString();
         return view("post.index",compact("posts"));
     }
 

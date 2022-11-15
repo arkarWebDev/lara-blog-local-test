@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\user;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\StoreuserRequest;
 use App\Http\Requests\UpdateuserRequest;
 
@@ -52,6 +53,7 @@ class UserController extends Controller
      */
     public function show(user $user)
     {
+        // return $user;
         return view("user.show",compact("user"));
     }
 
@@ -89,5 +91,11 @@ class UserController extends Controller
         $userName = $user->name;
         $user->delete();
         return redirect()->route("user.index")->with("status",$userName . " have been banned");
+    }
+
+    public function showAllPost(){
+        $normalUser = User::where("id",Auth::id())->get();
+        $finalUser = $normalUser[0]->posts()->latest('id')->paginate(12);
+        return view("user.allpost",compact('finalUser'));
     }
 }

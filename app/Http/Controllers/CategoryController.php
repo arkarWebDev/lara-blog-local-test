@@ -20,6 +20,7 @@ class CategoryController extends Controller
     {
         $categories = Category::when(Auth::user()->role == 2,fn ($q) => $q->where("user_id",Auth::id()))
         ->latest("id")
+        ->with("user")
         ->get();
         return view("category.index",compact("categories"));
     }

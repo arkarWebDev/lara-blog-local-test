@@ -54,4 +54,8 @@ class User extends Authenticatable
     public function nation(){
         return $this->BelongsTo(Nation::class);
     }
+
+    public function subImgs(){
+        return $this->hasManyThrough(SubImg::class,Post::class);
+    }
 }

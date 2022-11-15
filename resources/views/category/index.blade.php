@@ -21,7 +21,7 @@
     @forelse ($categories as $category)
       <tr>
         <th>
-          <p class="m-0">{{ $category->title }}</p>
+          <p class="m-0">{{ $category->title }} <span class=" badge bg-dark m-0">{{ $category->posts()->count() }}</span></p>
           @isUser
             <p class="m-0 text-black-50">Added by <span class="text-dark">You</span></p>
           @endisUser

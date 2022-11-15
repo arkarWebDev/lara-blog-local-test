@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
+
 .pagination > li > a,
 .pagination > li > span {
     color: #000; // use your own color here
@@ -75,6 +77,22 @@
 
 .hv-ef:hover::after {
     width: 100%;
+}
+
+.grid-ctr {
+    columns: 200px 3;
+}
+
+.cp {
+    cursor: pointer;
+}
+
+.text-it-ef {
+    font-family: "Pacifico", cursive;
+}
+
+.carousel-indicators {
+    margin-bottom: 0rem !important;
 }
 // Fonts
 @import url("https://fonts.bunny.net/css?family=Nunito");

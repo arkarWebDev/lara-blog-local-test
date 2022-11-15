@@ -77,18 +77,6 @@
             @enderror
             <div class="d-flex align-items-center mt-3 flex-column">
               <div class="w-100">
-                <label for="feature_image" class="form-label">Feature Image</label>
-                @if ($post->feature_image)
-                  <img src="{{ asset("storage/".$post->feature_image) }}" class="w-100 mb-3">
-                @else
-                  <p class=" fw-bold">This post does not have feature image .</p>
-                @endif
-                <input type="file" name="feature_image" class=" form-control w-50  @error('feature_image') is-invalid @enderror" id="feature_image" form="updateForm">
-                @error("feature_image")
-                    <p class=" invalid-feedback">{{ $message }}</p>
-                @enderror
-              </div>
-              <div class="w-100">
                 <input type="submit" value="Update Post" class=" btn btn-dark btn-lg mt-4 w-100" form="updateForm">
               </div>
             </div>
