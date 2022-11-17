@@ -30,7 +30,7 @@
             </div>
         </div>
         <div class="col-2"></div>
-        <div class="col-3">
+        <div class="col-lg-4 col-xl-3">
             @foreach ($posts as $post)
                 <div class="card my-3">
                     <div class="card-body">
@@ -40,16 +40,53 @@
                                     <img src="{{ asset('admin.jpg') }}" class="w-100">
                                 </div>
                                 <div class=" ms-1">
-                                    <span class=" fw-semibold">{{ $post->user->name }}</span>
-                                    <div></div>
-                                    <span class=" text-black-50">{{ $post->user->nation->name }}</span>
+                                    <p class=" fw-semibold m-0" >{{ $post->user->name }}</p>
+                                    <span class=" text-black-50 m-0">{{ $post->user->nation->name }}</span>
                                 </div>
                             </div>
                             <div>
                                 <i class="fa-solid fa-ellipsis fw-semibold fs-4"></i>
                             </div>
                         </div>
-                        <h4 class=" text-dark mt-2">{{ $post->title }}</h4>
+                        <h5 class=" text-dark mt-2">{{ $post->title }}</h5>
+                        <div id="carouselExampleIndicators{{ $post->id }}" class="carousel slide" 
+                            data-bs-ride="true">
+                            <div class="carousel-indicators">
+                                @foreach ($post->subImgs as $key => $img)
+                                    <button type="button" data-bs-target="#carouselExampleIndicators{{ $post->id }}" 
+                                    data-bs-slide-to="{{ $key }}" class="{{ $key == 0 ? 'active' : '' }}" 
+                                    aria-current="true" aria-label="Slide {{ $key }}"></button>
+                                @endforeach
+                            </div>
+                            <div class="carousel-inner">
+                                @foreach ($post->subImgs as $key => $img)
+                                <div class="carousel-item {{ $key == 0 ? 'active' : '' }}">
+                                    <img src="{{ asset('storage/' . $img->name) }}" class="d-block w-100" height="555"
+                                    style="object-fit: cover">
+                                </div>
+                                @endforeach
+                            </div>
+                            <button class="carousel-control-prev" type="button" 
+                            data-bs-target="#carouselExampleIndicators{{ $post->id }}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" 
+                            data-bs-target="#carouselExampleIndicators{{ $post->id }}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between my-2">
+                            <div>
+                                <i class="fa-regular fa-heart fs-3 me-3"></i>
+                                <i class="fa-regular fa-comment fs-3 me-3"></i>
+                                <i class="fa-regular fa-paper-plane fs-3"></i>
+                            </div>
+                            <div>
+                                <i class="fa-regular fa-bookmark fs-3"></i>
+                            </div>
+                        </div>
                         <span class=" text-dark m-0 short" id="des/{{ $post->id }}">
                             {{ Str::limit($post->description,300,'') }}
                         </span>
@@ -62,46 +99,77 @@
                 </div>
             @endforeach
         </div>
-        
         <div class="col-2">
             <div class="my-3">
                 <div class=" d-flex align-items-center justify-content-between mt-4">
-                        @if (Auth::user())
-                        <div class=" d-flex align-items-center">
-                            <div style="width: 60px;height: 60px" class="rounded-circle overflow-hidden">
-                                <img src="{{ asset('admin.jpg') }}" class="w-100">
-                            </div>
-                            <div class="ms-2">
-                                <span class=" fw-semibold">{{ Auth::user()->name }}</span>
-                                <div></div>
-                                @if (Auth::user()->role == 0)
-                                    <span class=" text-black-50">Admin</span>
-                                @elseif (Auth::user()->role == 1)
-                                    <span class=" text-black-50">Editor</span>
-                                @else
-                                    <span class=" text-black-50">User</span>
-                                @endif
-                            </div>
+                    @if (Auth::user())
+                    <div class=" d-flex align-items-center">
+                        <div style="width: 60px;height: 60px" class="rounded-circle overflow-hidden">
+                            <img src="{{ asset('admin.jpg') }}" class="w-100">
                         </div>
-                        <div>
-                            <a href="{{ route("user.show",Auth::user()->id) }}" class=" text-black-50">View Profile</a>
+                        <div class="ms-2">
+                            <span class=" fw-semibold">{{ Auth::user()->name }}</span>
+                            <div></div>
+                            <span class=" text-black-50">{{ Str::replace(' ','_',Auth::user()->name) }}</span>
                         </div>
-                        @else
-                        <div class=" d-flex align-items-center">
-                            <div style="width: 60px;height: 60px" class="rounded-circle overflow-hidden opacity-75">
-                                <img src="{{ asset('user_default.png') }}" class="w-100">
-                            </div>
-                            <div class=" ms-2">
-                                <span class=" fw-semibold">Guest User</span>
-                                <div></div>
-                                <a href="{{ route('login') }}"  class=" text-black-50">
-                                    <span>Login or Sign up</span>
-                                </a>
-                            </div>
+                    </div>
+                    <div>
+                        <a href="{{ route("user.show",Auth::user()->id) }}" class=" text-black-50">View Profile</a>
+                    </div>
+                    @else
+                    <div class=" d-flex align-items-center">
+                        <div style="width: 60px;height: 60px" class="rounded-circle overflow-hidden opacity-75">
+                            <img src="{{ asset('user_default.png') }}" class="w-100">
                         </div>
-                        @endif
+                        <div class=" ms-2">
+                            <span class=" fw-semibold">Guest User</span>
+                            <div></div>
+                            <a href="{{ route('login') }}"  class=" text-primary">
+                                <span>Login or Sign up</span>
+                            </a>
+                        </div>
+                    </div>
+                    @endif
                 </div>
             </div>
+            <p class=" fw-semibold my-2 fs-6">Recent Users</p>
+            @if (Auth::user())
+            @foreach ($users as $user)
+            <div class="mb-1">
+                <div class=" d-flex align-items-center justify-content-between">
+                    <div class=" d-flex align-items-center">
+                        <div style="width: 30px;height: 30px" class="rounded-circle overflow-hidden">
+                            <img src="{{ asset('admin.jpg') }}" class="w-100">
+                        </div>
+                        <div class="ms-3">
+                            <span class=" fw-semibold text-dark">{{ $user->name }}</span>
+                            <div></div>
+                            <span class=" text-black-50">{{ Str::replace(' ','_',$user->name) }}</span>
+                        </div>
+                    </div>
+                    <span class=" text-dark cp">follow</span>
+                </div>
+            </div>
+            @endforeach
+            @else
+            @for ($n=0;$n < 5;$n++)
+            <div class="mb-1">
+                <div class=" d-flex align-items-center justify-content-between">
+                    <div class=" d-flex align-items-center">
+                        <div style="width: 30px;height: 30px" class="rounded-circle overflow-hidden">
+                            <img src="{{ asset('user_default.png') }}" class="w-100 opacity-25">
+                        </div>
+                        <div class="ms-3">
+                            <span class=" fw-semibold text-black-50">▬▬▬▬▬▬</span>
+                            <div></div>
+                            <span class=" text-black-50">▬▬▬</span>
+                        </div>
+                    </div>
+                    <span class=" text-black-50">▬▬</span>
+                </div>
+            </div>
+            @endfor
+            @endif
         </div>
     </div>
 </div>

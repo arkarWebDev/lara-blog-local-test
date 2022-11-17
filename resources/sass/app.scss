@@ -94,6 +94,29 @@
 .carousel-indicators {
     margin-bottom: 0rem !important;
 }
+
+.img-ctr {
+    object-fit: cover;
+}
+
+.carousel-control-next-icon {
+    margin-left: 28px;
+    background-size: 10px;
+}
+
+.carousel-control-prev-icon {
+    margin-left: -28px;
+    background-size: 10px;
+}
+
+.carousel-indicators [data-bs-target] {
+    width: 10px !important;
+    height: 10px !important;
+    border-radius: 50% !important;
+    margin-right: 6px !important;
+    margin-left: 6px !important;
+}
+
 // Fonts
 @import url("https://fonts.bunny.net/css?family=Nunito");
 
